@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "sensors — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>sensors</h1>
+    <p>a <strong>sensor</strong> turns the real world into an electrical signal. analog sensors give a <em>voltage</em>; digital ones talk with a <em>protocol</em> or on/off pin.</p>
+
+    <h2>examples</h2>
+    <ul>
+      <li><strong>analog:</strong> LDR (light-dependent resistor), thermistor (temperature), microphone.</li>
+      <li><strong>digital:</strong> I²C accelerometer, SPI ADCs, one-wire temperature probes.</li>
+    </ul>
+
+    <h2>ldr divider</h2>
+    <p>read light by forming a voltage divider into an ADC pin.</p>
+    <div class="diagram" role="img" aria-label="LDR divider into ADC">
+      <svg viewBox="0 0 560 140" width="100%" height="auto">
+        <rect x="0" y="0" width="560" height="140" rx="16" fill="var(--card)"/>
+        <line x1="60" y1="30" x2="240" y2="30" stroke="currentColor" stroke-width="2"/>
+        <rect x="140" y="20" width="24" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="132" y="16" class="mono mini">LDR</text>
+        <line x1="152" y1="40" x2="152" y2="70" stroke="currentColor" stroke-width="2"/>
+        <rect x="140" y="70" width="24" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="152" y1="90" x2="152" y2="120" stroke="currentColor" stroke-width="2"/>
+        <line x1="60" y1="120" x2="260" y2="120" stroke="currentColor" stroke-width="2"/>
+        <text x="36" y="34" class="mono">+V</text>
+        <text x="36" y="124" class="mono">0V</text>
+        <line x1="152" y1="70" x2="420" y2="70" stroke="currentColor" stroke-width="2"/>
+        <text x="430" y="74" class="mono">to ADC</text>
+      </svg>
+    </div>
+
+    <h2>i²c notes</h2>
+    <ul>
+      <li>SDA/SCL need pull-ups (often on the breakout).</li>
+      <li>devices have addresses; change jumpers if they clash.</li>
+    </ul>
+  </article>
+</BaseLayout>

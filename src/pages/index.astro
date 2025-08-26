@@ -1,11 +1,18 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// /src/pages/index.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GuideCard from "../components/GuideCard.astro";
+import { homeCards } from "../data/cards";
+const title = "ecute.club — cute electronics club";
 ---
+<BaseLayout {title}>
+  <section class="section-head container">
+    <h2>gentle volts, bright bolts</h2>
+    <span class="hint mono">a soft-start to electronics</span>
+    <span class="hint mono">press “d” for dark</span>
+  </section>
 
-<Layout>
-	<Welcome />
-</Layout>
+  <section class="container grid">
+    {homeCards.map(card => <GuideCard {...card} />)}
+  </section>
+</BaseLayout>

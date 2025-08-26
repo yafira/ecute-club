@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "power basics — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>power basics</h1>
+    <p>batteries and regulators that keep projects happy. mind <em>voltage</em>, <em>polarity</em>, and <em>current</em>.</p>
+
+    <div class="callout">usb 5 V is common. add a fuse/current limit and polarity protection where it matters.</div>
+
+    <h2>regulators</h2>
+    <ul>
+      <li><strong>LDO</strong> – simple, a bit of heat; needs headroom (dropout).</li>
+      <li><strong>buck (switching)</strong> – efficient step-down; watch noise &amp; layout.</li>
+    </ul>
+
+    <h2>polarity protection</h2>
+    <p>series schottky or ideal-diode mosfet. add a reverse-protection graphic you like later.</p>
+  </article>
+</BaseLayout>

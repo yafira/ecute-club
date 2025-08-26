@@ -1,0 +1,73 @@
+---
+const {
+  title = "ecute.club",
+  description = "a cute, clear guide to electronics",
+  ogImage = "/favicon.svg",
+  footerText = "soldered with care ♡",
+  // optional manual override; if omitted we auto-pick based on path
+  bodyClass: bodyClassProp
+} = Astro.props;
+
+// auto background: home = grid, all other pages = lined
+const path = Astro.url?.pathname || "/";
+const autoBody = path === "/" ? "bg-grid" : "bg-lined";
+const bodyClass = bodyClassProp ?? autoBody;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <link rel="icon" href="/favicon.svg" />
+
+    <!-- theme color (updated on dark toggle) -->
+    <meta id="theme-color" name="theme-color" content="#fffdf9" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fffdf9" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121112" />
+
+    <link href="/styles/global.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class={bodyClass}>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="ecute.club home">
+        <img class="brand-mark" src="/favicon.svg" alt="ecute.club logo" />
+        <span>e-cute club</span>
+      </a>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>{footerText.replace("ecute.club", "")}<a href="/" aria-label="ecute home">ecute.club</a></p>
+    </footer>
+
+    <script>
+      // only dark-mode toggle (no pattern cycling)
+      (function () {
+        const root = document.documentElement;
+        const themeMeta = document.getElementById('theme-color');
+        function updateThemeColor() {
+          const bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#fffdf9';
+          if (themeMeta) themeMeta.setAttribute('content', bg);
+        }
+        document.addEventListener('keydown', (e) => {
+          if (e.key.toLowerCase() === 'd') {
+            root.classList.toggle('dark');
+            updateThemeColor();
+          }
+        });
+        updateThemeColor();
+      })();
+    </script>
+  </body>
+</html>

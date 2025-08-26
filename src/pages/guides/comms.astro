@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "comms (uart / i²c / spi) — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>comms: talk between chips</h1>
+    <p>three friendly ways to communicate:</p>
+
+    <ul>
+      <li><strong>UART</strong> — two wires (TX/RX), point-to-point. great for logs.</li>
+      <li><strong>I²C</strong> — two wires (SDA/SCL) with pull-ups. multiple devices on one bus.</li>
+      <li><strong>SPI</strong> — fast 3–4+ wires (MOSI/MISO/SCK/CS). one CS per device.</li>
+    </ul>
+
+    <div class="diagram" role="img" aria-label="uart, i2c, spi mini wiring">
+      <svg viewBox="0 0 560 200" width="100%" height="auto">
+        <rect x="0" y="0" width="560" height="200" rx="16" fill="var(--card)"/>
+        <text x="36" y="36" class="mono">uart</text>
+        <rect x="80" y="20" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <rect x="210" y="20" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <line x1="150" y1="30" x2="210" y2="34" stroke="currentColor"/>
+        <line x1="150" y1="34" x2="210" y2="30" stroke="currentColor"/>
+        <text x="118" y="16" class="mono mini">TX/RX</text>
+        <text x="36" y="96" class="mono">i²c</text>
+        <rect x="80" y="80" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <rect x="210" y="80" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <line x1="150" y1="92" x2="210" y2="92" stroke="currentColor"/>
+        <line x1="150" y1="100" x2="210" y2="100" stroke="currentColor"/>
+        <line x1="180" y1="92" x2="180" y2="60" stroke="currentColor"/>
+        <line x1="180" y1="100" x2="180" y2="60" stroke="currentColor"/>
+        <line x1="170" y1="60" x2="190" y2="60" stroke="currentColor"/>
+        <text x="194" y="64" class="mono mini">pull-ups</text>
+        <text x="36" y="156" class="mono">spi</text>
+        <rect x="80" y="140" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <rect x="210" y="140" width="70" height="34" rx="6" fill="none" stroke="currentColor"/>
+        <line x1="150" y1="150" x2="210" y2="150" stroke="currentColor"/>
+        <line x1="150" y1="158" x2="210" y2="158" stroke="currentColor"/>
+        <line x1="115" y1="174" x2="245" y2="174" stroke="currentColor"/>
+        <text x="118" y="136" class="mono mini">MOSI/MISO/SCK/CS</text>
+      </svg>
+    </div>
+
+    <p class="muted">level-shift when mixing 5 V and 3.3 V logic; keep wires short for clean signals.</p>
+  </article>
+</BaseLayout>

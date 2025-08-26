@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "cables & wire — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>cables &amp; wire</h1>
+    <p><strong>what is a wire?</strong> a metal conductor with insulation. a <strong>cable</strong> is a bundle of wires. choose by <em>gauge</em>, <em>flexibility</em>, and <em>current</em>.</p>
+
+    <h2>quick picks</h2>
+    <ul>
+      <li><strong>solid</strong>: holds shape; great for breadboards.</li>
+      <li><strong>stranded</strong>: flexible; better for moving cables.</li>
+      <li><strong>AWG</strong>: smaller number = thicker wire (more current).</li>
+    </ul>
+
+    <div class="diagram" role="img" aria-label="solid vs stranded cross-section">
+      <svg viewBox="0 0 520 120" width="100%" height="auto">
+        <rect x="0" y="0" width="520" height="120" rx="16" fill="var(--card)"/>
+        <circle cx="150" cy="60" r="26" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="150" cy="60" r="18" fill="currentColor" opacity=".2"/>
+        <text x="150" y="100" text-anchor="middle" class="mono">solid</text>
+
+        <circle cx="360" cy="60" r="26" fill="none" stroke="currentColor" stroke-width="2"/>
+        <!-- stranded little filaments -->
+        <circle cx="360" cy="60" r="6" fill="currentColor" opacity=".2"/>
+        <circle cx="346" cy="48" r="6" fill="currentColor" opacity=".2"/>
+        <circle cx="374" cy="48" r="6" fill="currentColor" opacity=".2"/>
+        <circle cx="374" cy="72" r="6" fill="currentColor" opacity=".2"/>
+        <circle cx="346" cy="72" r="6" fill="currentColor" opacity=".2"/>
+        <text x="360" y="100" text-anchor="middle" class="mono">stranded</text>
+      </svg>
+    </div>
+
+    <h2>tips</h2>
+    <ul>
+      <li>strain-relief your cables; avoid sharp bends near solder joints.</li>
+      <li>use proper connectors (JST-PH/XH, barrel, USB-C) instead of raw wires when possible.</li>
+    </ul>
+  </article>
+</BaseLayout>

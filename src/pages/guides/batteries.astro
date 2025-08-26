@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "batteries & charging — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>batteries &amp; charging</h1>
+    <p>a <strong>cell</strong> is one electrochemical unit (AA, 18650). a <strong>battery</strong> is cells together. key specs: <strong>voltage</strong>, <strong>capacity</strong> (mAh), and <strong>max current</strong> (C-rate).</p>
+
+    <h2>common choices</h2>
+    <ul>
+      <li><strong>AA/AAA</strong> (alkaline/NiMH): simple, safe, modest current.</li>
+      <li><strong>Li-ion / LiPo</strong> (single cell ≈ 3.0–4.2 V): light and strong; requires protection and correct charging.</li>
+    </ul>
+
+    <div class="diagram" role="img" aria-label="Li-ion cell with protection board and JST-PH">
+      <svg viewBox="0 0 560 170" width="100%" height="auto">
+        <rect x="0" y="0" width="560" height="170" rx="16" fill="var(--card)"/>
+        <rect x="60" y="50" width="120" height="40" rx="8" fill="none" stroke="currentColor"/>
+        <text x="120" y="76" class="mono" text-anchor="middle">Li-ion</text>
+        <line x1="180" y1="70" x2="260" y2="70" stroke="currentColor"/>
+        <rect x="260" y="58" width="80" height="24" rx="6" fill="none" stroke="currentColor"/>
+        <text x="300" y="74" class="mono" text-anchor="middle">protection</text>
+        <line x1="340" y1="70" x2="430" y2="70" stroke="currentColor"/>
+        <rect x="430" y="58" width="50" height="24" rx="6" fill="none" stroke="currentColor"/>
+        <text x="455" y="74" class="mono" text-anchor="middle">JST</text>
+      </svg>
+    </div>
+
+    <h2>charging &amp; safety</h2>
+    <ul>
+      <li>use a proper charger (e.g., TP4056-style for 1-cell) and respect charge current.</li>
+      <li>protect against reverse polarity and short circuits; never puncture cells.</li>
+      <li>store partially charged in a safe pouch; don’t leave charging unattended.</li>
+    </ul>
+  </article>
+</BaseLayout>

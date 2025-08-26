@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "diodes — ecute.club";
+---
+<BaseLayout {title}>
+  <article class="container">
+    <h1>diodes</h1>
+    <p><strong>what is a diode?</strong> a one-way valve for current. when forward-biased it conducts with a small voltage drop; reversed, it (mostly) blocks.</p>
+
+    <div class="callout">
+      orientation: the <strong>stripe = cathode (−)</strong>. conventional current flows from anode → cathode.
+    </div>
+
+    <h2>common kinds</h2>
+    <ul>
+      <li><strong>signal/rectifier</strong>: general one-way conduction.</li>
+      <li><strong>Schottky</strong>: lower drop (~0.2–0.4 V), faster; great for protection.</li>
+      <li><strong>Zener</strong>: designed to conduct in reverse at a set voltage (clamps).</li>
+      <li><strong>LED</strong>: light-emitting diode (see <a href="/guides/leds">LEDs</a>).</li>
+    </ul>
+
+    <h2>tiny polarity-protection sketch</h2>
+    <div class="diagram" role="img" aria-label="series diode for reverse-polarity protection">
+      <svg viewBox="0 0 520 120" width="100%" height="auto">
+        <rect x="0" y="0" width="520" height="120" rx="16" fill="var(--card)"/>
+        <text x="36" y="64" class="mono">+V</text>
+        <line x1="70" y1="60" x2="200" y2="60" stroke="currentColor" stroke-width="3"/>
+        <!-- simple diode body with stripe -->
+        <rect x="200" y="50" width="40" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>
+        <line x1="232" y1="50" x2="232" y2="70" stroke="currentColor" stroke-width="3"/>
+        <text x="210" y="48" class="mono mini">stripe = −</text>
+        <line x1="240" y1="60" x2="420" y2="60" stroke="currentColor" stroke-width="3"/>
+        <text x="430" y="64" class="mono">to circuit</text>
+        <line x1="40" y1="100" x2="480" y2="100" stroke="currentColor" stroke-width="2"/>
+        <text x="18" y="104" class="mono">0V</text>
+      </svg>
+    </div>
+
+    <h2>rules of thumb</h2>
+    <ul>
+      <li>budget the forward drop in your voltage plan.</li>
+      <li>for coils (motors/relays), add a <strong>flyback diode</strong> across the coil (stripe to +).</li>
+      <li>use Zeners for simple voltage clamps/reference; mind power dissipation.</li>
+    </ul>
+  </article>
+</BaseLayout>

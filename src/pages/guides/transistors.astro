@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const title = "transistors — ecute.club";
+---
+<BaseLayout {title}>
+   <article class="container">
+    <h1>transistors</h1>
+    <p><strong>what is a transistor?</strong> a controllable valve for current. a small input signal (base/gate) controls a bigger current through the device.</p>
+
+    <h2>two families</h2>
+    <ul>
+      <li><strong>BJT</strong> (npn/pnp): current-driven, pins = base/collector/emitter.</li>
+      <li><strong>MOSFET</strong> (n/p): voltage-driven, pins = gate/drain/source; pick <em>logic-level</em> parts for 3.3/5 V.</li>
+    </ul>
+
+    <h2>BJT (NPN/PNP)</h2>
+    <ul>
+      <li>pins: base (B), collector (C), emitter (E).</li>
+      <li><strong>NPN low-side switch:</strong> base through ~1 kΩ, emitter to GND, collector to load → +V. add a diode for motors/relays.</li>
+      <li>gain β: <code>I<sub>c</sub> ≈ β × I<sub>b</sub></code>; for switching, overdrive the base (assume β≈10 for sizing).</li>
+    </ul>
+
+    <h2>MOSFET</h2>
+    <ul>
+      <li>pins: gate (G), drain (D), source (S).</li>
+      <li>pick a <strong>logic-level N-MOSFET</strong> with low <code>R<sub>DS(on)</sub></code> at your gate voltage (check datasheet @ 3.3/5 V).</li>
+      <li>gate draws almost no current; add ~100 Ω in series + 100 kΩ pulldown to GND.</li>
+    </ul>
+
+    <div class="diagram" role="img" aria-label="N-MOSFET low-side switch wiring">
+      <svg viewBox="0 0 560 200" width="100%" height="auto">
+        <rect x="0" y="0" width="560" height="200" rx="16" fill="var(--card)"/>
+        <!-- supply and load -->
+        <text x="36" y="34" class="mono">+V</text>
+        <line x1="60" y1="30" x2="220" y2="30" stroke="currentColor" stroke-width="2"/>
+        <rect x="180" y="20" width="26" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="176" y="16" class="mono">load</text>
+        <line x1="206" y1="30" x2="260" y2="30" stroke="currentColor" stroke-width="2"/>
+        <line x1="260" y1="30" x2="260" y2="90" stroke="currentColor" stroke-width="2"/>
+        <!-- MOSFET -->
+        <rect x="250" y="90" width="20" height="40" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="246" y="86" class="mono">N-MOSFET</text>
+        <line x1="260" y1="130" x2="260" y2="170" stroke="currentColor" stroke-width="2"/>
+        <!-- diode across inductive load -->
+        <polygon points="200,35 185,30 185,40" fill="currentColor"/>
+        <line x1="206" y1="26" x2="206" y2="44" stroke="currentColor" stroke-width="2"/>
+        <text x="210" y="38" class="mono">diode for coils</text>
+        <!-- gate drive -->
+        <rect x="320" y="100" width="24" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="348" y="112" class="mono">100 Ω</text>
+        <line x1="344" y1="108" x2="420" y2="108" stroke="currentColor" stroke-width="2"/>
+        <text x="426" y="112" class="mono">MCU pin</text>
+        <!-- pulldown -->
+        <line x1="260" y1="130" x2="300" y2="130" stroke="currentColor" stroke-width="2"/>
+        <rect x="300" y="130" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="308" y1="152" x2="308" y2="170" stroke="currentColor" stroke-width="2"/>
+        <text x="322" y="146" class="mono">100 kΩ</text>
+        <!-- ground -->
+        <line x1="40" y1="170" x2="520" y2="170" stroke="currentColor" stroke-width="2"/>
+        <text x="12" y="174" class="mono">0V</text>
+      </svg>
+    </div>
+
+    <h2>motor/LED-strip example</h2>
+    <div class="callout">5–12 V supply → load → drain; source → ground; gate from micro via 100 Ω with 100 kΩ pulldown; add a diode across inductive loads.</div>
+  </article>
+</BaseLayout>
