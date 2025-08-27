@@ -258,24 +258,46 @@ body.bg-solid {
 	}
 }
 
-.theme-toggle {
-	font-size: 40px;
-	padding: 6px 10px;
+/* toggle buttons (theme + background) */
+.toggle-group {
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.toggle-btn {
+	font-size: 20px; /* compact so both fit nicely */
+	line-height: 1;
+	padding: 10px 12px;
 	border: none;
 	background: var(--card);
 	border-radius: 999px;
 	cursor: pointer;
 	color: var(--ink);
 	box-shadow: inset 0 0 0 1px var(--line);
-	transition: background var(--speed), transform var(--speed);
+	transition: background var(--speed), transform var(--speed),
+		opacity var(--speed);
 }
-.theme-toggle:hover {
+
+.toggle-btn:hover {
 	background: var(--p5);
 	transform: translateY(-1px);
 }
-:root.dark .theme-toggle {
+
+:root.dark .toggle-btn {
 	background: var(--card);
 	color: var(--ink);
+}
+
+/* optional: small-screen tweaks so the header doesn’t wrap awkwardly */
+@media (max-width: 640px) {
+	.site-nav {
+		gap: 6px;
+	}
+	.toggle-btn {
+		padding: 8px 10px;
+		font-size: 18px;
+	}
 }
 
 /* ---------- cards ---------- */

@@ -1,7 +1,7 @@
 ---
 const {
   title = "ecute.club",
-  description = "a cute, clear guide to electronics",
+  description = "a cute, soft guide to electronics",
   ogImage = "/favicon.svg",
   footerText = "soldered with care ♡",
   bodyClass = "bg-grid",
@@ -49,7 +49,10 @@ const {
         <a href="/guides/circuit-symbols">circuit symbols</a>
         <a href="/guides/tools">tools</a>
         <a href="/guides/books">books</a>
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">☼</button>
+        <div class="toggle-group" role="group" aria-label="display toggles">
+          <button id="bgToggle" class="toggle-btn" aria-label="toggle background pattern" title="background (press g)">⋯</button>
+          <button id="themeToggle" class="toggle-btn" aria-label="toggle dark mode" title="theme (press d)">☼</button>
+        </div>
       </nav>
     </header>
 
@@ -58,81 +61,103 @@ const {
     </main>
 
     <footer class="site-footer">
-      <p>{footerText} · <a href="https://electrocute.io/" aria-label="electrocute homepage">electrocute</a></p>
+      <p>{footerText} by <a href="https://electrocute.io/" aria-label="electrocute homepage">electrocute</a></p>
     </footer>
 
-   <script>
-    // @ts-nocheck
-
+<script>
+// @ts-nocheck
 (() => {
+  // ---- constants ----
   const root = document.documentElement;
   const body = document.body;
   const themeMeta = document.getElementById('theme-color');
-  const btn = document.getElementById('themeToggle');
+  const btnTheme = document.getElementById('themeToggle');
+  const btnBg = document.getElementById('bgToggle');
 
   const THEME_KEY = 'ecute-theme';
   const BG_KEY = 'bgPattern';
   const PATTERNS = ['bg-dots', 'bg-grid', 'bg-lined', 'bg-solid'];
 
+  // icons chosen to visually hint the pattern
+  const BG_ICONS = {
+    'bg-dots': '⋯',
+    'bg-grid': '⊞',
+    'bg-lined': '≡',
+    'bg-solid': '■',
+  };
+
+  // ---- helpers ----
   function updateThemeColorMeta() {
     const bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#fffdf9';
     if (themeMeta) themeMeta.setAttribute('content', bg);
   }
 
   /** @typedef {'dark'|'light'} ThemeMode */
-
   function currentTheme() {
-    // support either class or data-attr (your CSS uses :root.dark)
-    return root.classList.contains('dark') || root.dataset.theme === 'dark'
-      ? 'dark'
-      : 'light';
+    return root.classList.contains('dark') || root.dataset.theme === 'dark' ? 'dark' : 'light';
   }
 
-  function applyTheme(/** @type {'dark'|'light'} */ mode) {
-    root.dataset.theme = mode;                       // optional, for future use
-    root.classList.toggle('dark', mode === 'dark');  // what your CSS uses
+  function applyTheme(mode /** @type {'dark'|'light'} */) {
+    root.dataset.theme = mode;
+    root.classList.toggle('dark', mode === 'dark');
     localStorage.setItem(THEME_KEY, mode);
-    updateToggleIcon();
+    updateToggleIcons();
     updateThemeColorMeta();
+    if (btnTheme) btnTheme.setAttribute('aria-pressed', String(mode === 'dark'));
   }
 
   function toggleTheme() {
     applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
   }
 
-  function updateToggleIcon() {
-    if (!btn) return;
-    btn.textContent = currentTheme() === 'dark' ? '☽' : '☼';
+  function currentPattern() {
+    for (const p of PATTERNS) if (body.classList.contains(p)) return p;
+    return 'bg-dots';
+  }
+
+  function applyPattern(p /** @type {string} */) {
+    body.classList.remove(...PATTERNS);
+    body.classList.add(p);
+    localStorage.setItem(BG_KEY, p);
+    updateToggleIcons();
+    if (btnBg) btnBg.setAttribute('aria-pressed', 'true');
   }
 
   function cyclePattern() {
-    const cur = PATTERNS.find(p => body.classList.contains(p)) || 'bg-dots';
+    const cur = currentPattern();
     const next = PATTERNS[(PATTERNS.indexOf(cur) + 1) % PATTERNS.length];
-    body.classList.remove(...PATTERNS);
-    body.classList.add(next);
-    localStorage.setItem(BG_KEY, next);
+    applyPattern(next);
+  }
+
+  function updateToggleIcons() {
+    if (btnTheme) btnTheme.textContent = currentTheme() === 'dark' ? '☽' : '☼';
+    if (btnBg) btnBg.textContent = BG_ICONS[currentPattern()] || '⋯';
   }
 
   function restore() {
+    // theme
     const savedTheme = localStorage.getItem(THEME_KEY);
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      applyTheme(savedTheme);
-    } else {
-      updateToggleIcon();
-      updateThemeColorMeta();
-    }
+    if (savedTheme === 'dark' || savedTheme === 'light') applyTheme(savedTheme);
+    else { updateToggleIcons(); updateThemeColorMeta(); }
 
+    // background
     const savedPattern = localStorage.getItem(BG_KEY);
-    if (savedPattern && PATTERNS.includes(savedPattern)) {
-      body.classList.remove(...PATTERNS);
-      body.classList.add(savedPattern);
-    }
+    if (savedPattern && PATTERNS.includes(savedPattern)) applyPattern(savedPattern);
+    else updateToggleIcons();
   }
 
-  // Header button
-  if (btn) btn.addEventListener('click', toggleTheme);
+  // ---- events ----
+  if (btnTheme) {
+    btnTheme.addEventListener('click', toggleTheme);
+    btnTheme.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
+  }
 
-  // Keyboard shortcuts (ignore when typing)
+  if (btnBg) {
+    btnBg.addEventListener('click', cyclePattern);
+    btnBg.setAttribute('aria-pressed', 'false');
+  }
+
+  // keyboard shortcuts (ignore when typing)
   window.addEventListener('keydown', (e) => {
     const t = e.target;
     if (t && t instanceof HTMLElement) {
@@ -144,21 +169,17 @@ const {
     if (k === 'g') cyclePattern();
   });
 
-  // Sync across tabs
+  // sync across tabs
   window.addEventListener('storage', (e) => {
-    if (e.key === THEME_KEY && e.newValue) {
-      applyTheme(/** @type {'dark'|'light'} */ (e.newValue));
-    }
-    if (e.key === BG_KEY && e.newValue && PATTERNS.includes(e.newValue)) {
-      body.classList.remove(...PATTERNS);
-      body.classList.add(e.newValue);
-    }
+    if (e.key === THEME_KEY && e.newValue) applyTheme(/** @type {'dark'|'light'} */(e.newValue));
+    if (e.key === BG_KEY && e.newValue && PATTERNS.includes(e.newValue)) applyPattern(e.newValue);
   });
 
-  // Kick off
+  // init
   restore();
 })();
 </script>
+
 
   </body>
 </html>
