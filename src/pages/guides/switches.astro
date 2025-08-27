@@ -33,8 +33,39 @@ const title = "switches — ecute.club";
       </svg>
     </div>
 
+    <h2>no vs nc (what “normal” means)</h2>
+<table class="cute">
+  <thead><tr><th>label</th><th>expands to</th><th>at rest</th><th>when actuated</th><th>common uses</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>NO</td>
+      <td>normally open</td>
+      <td>open (off)</td>
+      <td>closes (on)</td>
+      <td>doorbell, keyboard keys, most pushbuttons</td>
+    </tr>
+    <tr>
+      <td>NC</td>
+      <td>normally closed</td>
+      <td>closed (on)</td>
+      <td>opens (off)</td>
+      <td>e-stop, tamper loops, hold-to-break safety</td>
+    </tr>
+    <tr>
+      <td>COM</td>
+      <td>common</td>
+      <td colspan="3">the wiper. in an spdt, COM connects to NO or NC depending on lever position.</td>
+    </tr>
+  </tbody>
+</table>
+
+<Note variant="fact">
+  “normal” = unpressed/unflipped; for relays, coil not energized. momentary = returns when released. toggle = stays where you leave it.
+</Note>
+
+
     <Note variant="try">wire an LED to NO and another to NC (with resistors). move the lever and watch which one lights.</Note>
-    <Note variant="fact">momentary = returns when released. toggle = stays where you leave it.</Note>
+
 
     <h2>debounce</h2>
     <p>mechanical contacts bounce for a few ms. in code, debounce 10–50 ms or hardware RC + schmitt trigger.</p>
