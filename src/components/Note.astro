@@ -1,0 +1,12 @@
+---
+interface Props {
+  variant?: 'try' | 'care' | 'fact';
+  label?: string;
+}
+const { variant = 'fact', label } = Astro.props;
+const defaultLabel = variant === 'try' ? 'try this' : variant === 'care' ? 'caution' : 'fact';
+---
+<div class={`note ${variant}`} role="note">
+  <div class="note-label">{label ?? defaultLabel}</div>
+  <slot />
+</div>

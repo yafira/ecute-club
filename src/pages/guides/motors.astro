@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "motors & drivers — ecute.club";
 ---
 <BaseLayout {title}>
@@ -40,5 +41,13 @@ const title = "motors & drivers — ecute.club";
     </div>
 
     <p class="example">bigger loads → MOSFET or dedicated driver; add a fuse for safety.</p>
+
+    <Note variant="care">choose a driver rated above stall current; add bulk caps close to the driver and protect with flybacks where needed.</Note>
+
+     <h2>servo &amp; stepper quickies</h2>
+    <ul>
+      <li><strong>servo:</strong> 5 V power + control pulse every ~20 ms (use a servo library).</li>
+      <li><strong>stepper:</strong> needs a stepper driver (A4988, TMC) and distinct supply current.</li>
+    </ul>
   </article>
 </BaseLayout>

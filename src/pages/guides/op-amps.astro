@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "op-amps — ecute.club";
 ---
 <BaseLayout {title}>
@@ -34,5 +35,10 @@ const title = "op-amps — ecute.club";
     </div>
 
     <p class="muted">pick “rail-to-rail” input/output for 3.3 V work; decouple the op-amp just like any IC.</p>
+
+    <Note variant="fact">a follower gives high input impedance and low output impedance; great between a sensor and an ADC.</Note>
+
+    <h2>non-inverting gain</h2>
+    <p><code>Gain = 1 + R<sub>f</sub>/R<sub>g</sub></code>. pick R’s in the 1–100 kΩ range.</p>
   </article>
 </BaseLayout>

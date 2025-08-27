@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "pcb basics — ecute.club";
 ---
 <BaseLayout {title}>
@@ -49,8 +50,10 @@ const title = "pcb basics — ecute.club";
       </svg>
     </div>
 
-    <h2>what’s a ground pour?</h2>
-    <p><strong>Ground pour</strong> (aka <em>ground plane</em>) means you fill unused board area with copper tied to <span class="mono">GND</span>.</p>
+
+   <Note variant="fact">a <strong>ground pour / plane</strong> is a large copper area connected to GND. it shortens return paths, reduces noise, and helps thermal.</Note>
+    <Note variant="care">keep high-current returns away from sensitive analog returns; stitch pours with vias; keep clearances sensible.</Note>
+
 
     <h3>why it’s good</h3>
     <ul>

@@ -1,15 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "integrated circuits — ecute.club";
 ---
 <BaseLayout {title}>
   <article class="container">
     <h1>integrated circuits (ICs)</h1>
     <p>ICs (chips) are <em>complete circuits</em> etched onto tiny pieces of silicon and packaged so we can solder or plug them in. One chip can be a gate, a counter, an amplifier, a microcontroller… or an entire radio.</p>
-
-    <div class="callout">
-      also see: <a href="/guides/555">555 timer</a> · <a href="/guides/ic-4000">4000 series CMOS</a> · <a href="/guides/ic-7400">74 series TTL/HC</a>
-    </div>
 
     <h2>pins & orientation</h2>
     <p>Packages have a <strong>pin&nbsp;1 mark</strong> (a <em>dot</em>) and/or a <strong>notch</strong>. Numbering goes counter-clockwise around the chip starting at pin&nbsp;1.</p>
@@ -148,5 +145,12 @@ const title = "integrated circuits — ecute.club";
       <li>the datasheet (pin functions, configuration bits) or Microchip’s MCC tool.</li>
     </ul>
     <p>Arduino-style boards hide setup, but learning from raw PIC/AVR/ARM teaches great habits.</p>
+
+    <Note variant="care">handle with ESD care; keep <strong>0.1 µF</strong> at VCC/GND pins (plus bulk on the rail).</Note>
+    <Note variant="fact">datasheets list pinouts, abs-max ratings, timings, and typical circuits — worth a skim before wiring.</Note>
+
+ <div class="callout">
+      also see: <a href="/guides/555">555 timer</a> · <a href="/guides/ic-4000">4000 series CMOS</a> · <a href="/guides/ic-7400">74 series TTL/HC</a>
+    </div>
   </article>
 </BaseLayout>

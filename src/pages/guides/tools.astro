@@ -1,70 +1,41 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-const title = "tools for electronics — ecute.club";
+import Note from "../../components/Note.astro";
+const title = "tools — ecute.club";
 ---
-<BaseLayout {title}>
+<BaseLayout {title} bodyClass="bg-lined">
   <article class="container">
-    <h1>tools for electronics</h1>
-    <p>small, friendly tools that make building neat and calm.</p>
+    <h1>tools</h1>
 
-    <div class="callout">
-      starter picks: flush cutters, wire strippers, tweezers, <strong>60 W temp-controlled iron</strong>, 63/37 solder, flux pen, wick, basic multimeter, breadboard + jumpers.
-    </div>
-
-    <h2>essentials</h2>
-    <ul>
-      <li><strong>flush cutters</strong> – trim leads cleanly.</li>
-      <li><strong>wire strippers</strong> – 22 AWG solid for breadboards; 24–28 AWG stranded for cables.</li>
-      <li><strong>tweezers</strong> – ESD-safe makes SMD calm.</li>
-      <li><strong>soldering iron</strong> – ~330–360 °C leaded, 360–380 °C lead-free; sponge or brass wool.</li>
-      <li><strong>solder</strong> – 0.6–0.8 mm; 63/37 is easy. keep a <strong>flux pen</strong> + wick handy.</li>
-      <li><strong>multimeter (DMM)</strong> – DC volts, resistance, continuity beep are the daily drivers.</li>
-      <li><strong>breadboard &amp; jumpers</strong> – prototype without solder.</li>
-    </ul>
-
-    <h2>nice to have</h2>
-    <ul>
-      <li><strong>bench supply</strong> with current limit.</li>
-      <li><strong>hot air</strong> or rework station; heat-shrink &amp; hot glue for cables.</li>
-      <li><strong>logic analyzer</strong> for I²C/SPI mysteries; an <strong>oscilloscope</strong> for waves.</li>
-      <li><strong>ESD strap</strong>, Kapton tape, helping-hands or PCB vise.</li>
-    </ul>
-
-    <h2>quick DMM sketch</h2>
-    <div class="diagram" role="img" aria-label="measure DC voltage with a multimeter across a part">
-      <svg viewBox="0 0 560 180" width="100%" height="auto">
-        <rect x="0" y="0" width="560" height="180" rx="16" fill="var(--card)"/>
-        <!-- circuit under test -->
-        <text x="36" y="44" class="mono">+5V</text>
-        <line x1="70" y1="40" x2="220" y2="40" stroke="currentColor" stroke-width="2"/>
-        <rect x="220" y="30" width="36" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="214" y="24" class="mono mini">R</text>
-        <line x1="256" y1="40" x2="340" y2="40" stroke="currentColor" stroke-width="2"/>
-        <line x1="340" y1="40" x2="340" y2="140" stroke="currentColor" stroke-width="2"/>
-        <line x1="60"  y1="140" x2="340" y2="140" stroke="currentColor" stroke-width="2"/>
-        <text x="32" y="144" class="mono">0V</text>
-
-        <!-- DMM box -->
-        <rect x="380" y="30" width="150" height="100" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="455" y="62" text-anchor="middle" class="mono">DMM</text>
-        <text x="455" y="82" text-anchor="middle" class="mono mini">DC V</text>
-        <!-- probes -->
-        <circle cx="430" cy="120" r="4" fill="currentColor"/>
-        <circle cx="480" cy="120" r="4" fill="currentColor"/>
-        <text x="420" y="138" class="mono mini">COM</text>
-        <text x="472" y="138" class="mono mini">VΩ</text>
-        <!-- leads to circuit -->
-        <line x1="430" y1="120" x2="320" y2="140" stroke="currentColor" stroke-width="2"/>
-        <line x1="480" y1="120" x2="320" y2="40"  stroke="currentColor" stroke-width="2"/>
-        <text x="326" y="28" class="mono mini">measure across</text>
+    <div class="diagram" aria-label="iron + DMM + cutters icons">
+      <svg viewBox="0 0 720 140" width="100%" height="auto">
+        <rect x="10" y="10" width="700" height="120" rx="16" fill="var(--card)"/>
+        <!-- iron -->
+        <text x="80" y="34" class="mono">iron</text>
+        <rect x="40" y="50" width="80" height="20" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+        <polygon points="120,50 140,60 120,70" fill="none" stroke="currentColor" stroke-width="3"/>
+        <!-- dmm -->
+        <text x="300" y="34" class="mono">DMM</text>
+        <rect x="250" y="44" width="110" height="70" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="305" cy="64" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="265" y="86" width="30" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="305" y="86" width="30" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <!-- cutters -->
+        <text x="540" y="34" class="mono">cutters</text>
+        <path d="M520,80 C540,40 560,40 580,80" fill="none" stroke="currentColor" stroke-width="3"/>
+        <path d="M520,80 C540,120 560,120 580,80" fill="none" stroke="currentColor" stroke-width="3"/>
       </svg>
     </div>
 
-    <h2>tiny safety</h2>
+    <h2>bench basics</h2>
     <ul>
-      <li>ventilation for solder fumes; wash hands after leaded solder.</li>
-      <li>eye protection when cutting leads.</li>
-      <li>for current measurements, move the red lead to the A/mA jack and wire the meter <em>in series</em> — double-check range &amp; fuse.</li>
+      <li>soldering iron (330–360 °C leaded, 360–380 °C lead-free), brass wool/sponge, 63/37 solder, flux pen</li>
+      <li>cutters, needle-nose pliers, tweezers, wire strippers, helping hands</li>
+      <li>DMM (continuity, voltage, current), optional logic probe/USB logic analyzer</li>
+      <li>heat-shrink, hot glue, electrical tape, zip ties</li>
     </ul>
+
+    <Note variant="try">practice drag-soldering on a scrap board; flux is 90% of the trick.</Note>
+    <Note variant="care">keep tips tinned; never scrape on copper pads — use wick + flux.</Note>
   </article>
 </BaseLayout>

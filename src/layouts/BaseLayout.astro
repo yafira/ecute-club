@@ -4,14 +4,10 @@ const {
   description = "a cute, clear guide to electronics",
   ogImage = "/favicon.svg",
   footerText = "soldered with care ♡",
-  // optional manual override; if omitted we auto-pick based on path
-  bodyClass: bodyClassProp
+  bodyClass = "bg-grid",
+  // If you use Astro assets, import above and set logoSrc = LogoUrl
+  logoSrc = "/src/assets/ecute.png", // <-- make sure this file exists
 } = Astro.props;
-
-// auto background: home = grid, all other pages = lined
-const path = Astro.url?.pathname || "/";
-const autoBody = path === "/" ? "bg-grid" : "bg-lined";
-const bodyClass = bodyClassProp ?? autoBody;
 ---
 <!doctype html>
 <html lang="en">
@@ -25,22 +21,25 @@ const bodyClass = bodyClassProp ?? autoBody;
     <meta property="og:image" content={ogImage} />
     <link rel="icon" href="/favicon.svg" />
 
-    <!-- theme color (updated on dark toggle) -->
     <meta id="theme-color" name="theme-color" content="#fffdf9" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fffdf9" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121112" />
 
     <link href="/styles/global.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
   </head>
   <body class={bodyClass}>
     <header class="site-header">
       <a class="brand" href="/" aria-label="ecute.club home">
-        <img class="brand-mark" src="/favicon.svg" alt="ecute.club logo" />
-        <span>e-cute club</span>
+        <img class="brand-logo" src={logoSrc} alt="ecute club" loading="eager" decoding="async" />
+        <span class="brand-text">ecute club</span>
       </a>
+      <nav class="site-nav" aria-label="site">
+        <span class="header-note">press “d” for dark · “g” for background</span>
+      </nav>
     </header>
 
     <main class="container">
@@ -48,24 +47,52 @@ const bodyClass = bodyClassProp ?? autoBody;
     </main>
 
     <footer class="site-footer">
-      <p>{footerText.replace("ecute.club", "")}<a href="/" aria-label="ecute home">ecute.club</a></p>
+      <p>{footerText} · <a href="/" aria-label="ecute home">ecute.club</a></p>
     </footer>
 
     <script>
-      // only dark-mode toggle (no pattern cycling)
       (function () {
         const root = document.documentElement;
         const themeMeta = document.getElementById('theme-color');
+
         function updateThemeColor() {
           const bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#fffdf9';
           if (themeMeta) themeMeta.setAttribute('content', bg);
         }
-        document.addEventListener('keydown', (e) => {
-          if (e.key.toLowerCase() === 'd') {
-            root.classList.toggle('dark');
-            updateThemeColor();
-          }
+
+        const BG_KEY = 'bgPattern';
+        const patterns = ['bg-grid', 'bg-lined', 'bg-dots', 'bg-solid'];
+
+        function toggleDark(){ root.classList.toggle('dark'); updateThemeColor(); }
+        function restorePattern(){
+          const saved = localStorage.getItem(BG_KEY);
+          if (!saved) return;
+          document.body.classList.remove(...patterns);
+          document.body.classList.add(saved);
+        }
+        function cyclePattern(){
+          const current = patterns.find(p => document.body.classList.contains(p)) || patterns[0];
+          const next = patterns[(patterns.indexOf(current) + 1) % patterns.length];
+          document.body.classList.remove(...patterns);
+          document.body.classList.add(next);
+          localStorage.setItem(BG_KEY, next);
+        }
+
+        window.addEventListener('keydown', (e) => {
+          const t = e.target;
+          let tag = '';
+          if (t && t instanceof Element) tag = t.tagName.toLowerCase();
+          const isTyping =
+            tag === 'input' || tag === 'textarea' || tag === 'select' ||
+            (t && t instanceof HTMLElement && t.isContentEditable);
+          if (isTyping) return;
+
+          const k = e.key.toLowerCase();
+          if (k === 'd') toggleDark();
+          if (k === 'g') cyclePattern();
         });
+
+        restorePattern();
         updateThemeColor();
       })();
     </script>

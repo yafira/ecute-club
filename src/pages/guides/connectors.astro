@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "connectors — ecute.club";
 ---
 <BaseLayout {title}>
@@ -44,7 +45,16 @@ const title = "connectors — ecute.club";
       </svg>
     </div>
 
+    <Note variant="care">use locking/keyed families (JST-PH/XH, MicroFit) and <strong>strain relief</strong> so cables don’t rip pads.</Note>
+
+    <h2>common families</h2>
+    <ul>
+      <li>dupont (temporary breadboarding), JST-PH (small power), 2.54 mm headers, USB-C (complex, but neat).</li>
+    </ul>
+
     <h2>strain relief</h2>
     <p>tie-downs, cable glands, and hot-glue blobs save JST/Dupont from yanks. route cables along edges.</p>
+
+
   </article>
 </BaseLayout>

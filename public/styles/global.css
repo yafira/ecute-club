@@ -1,18 +1,18 @@
 /* ------------------------------------------------------------
-   ecute.club — global.css (updated)
-   - IBM Plex Mono everywhere
+   ecute.club — global.css (cream + pastels + lab notes)
+   - IBM Plex Mono everywhere (+ optional hand accent)
    - Card icons turn black in dark mode
-   - Strong diagram text readability halo (light + dark)
+   - Strong diagram label halo (light + dark)
 ------------------------------------------------------------- */
 
-/* load font */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Caveat:wght@600&display=swap');
 
 /* ---------- design tokens ---------- */
 :root {
 	/* colors */
-	--bg: #fffdf9;
-	--ink: #1e1b19;
+	--bg: #fffdf9; /* cream */
+	--ink: #1e1b19; /* main text */
 	--muted: #67615b;
 	--card: #ffffff;
 	--line: color-mix(in oklab, var(--ink) 12%, transparent);
@@ -38,7 +38,7 @@
 	--container: min(1100px, 92vw);
 	--grid-min: 300px;
 
-	/* typography scale */
+	/* type scale */
 	--fs-0: 14px;
 	--fs-1: clamp(15.5px, 1.4vw, 17px);
 	--fs-2: clamp(18px, 2.1vw, 20px);
@@ -46,10 +46,13 @@
 	--fs-4: clamp(28px, 3.8vw, 34px);
 	--lh: 1.55;
 
-	/* bg controls */
+	/* background helpers */
 	--bg-grid: color-mix(in oklab, var(--ink) 12%, transparent);
 	--bg-grid-size: 22px;
-	--bg-dot: 1.1px; /* not used now, fine to keep */
+	--bg-dot: 1.1px;
+
+	/* hand accent */
+	--font-hand: 'Caveat', system-ui;
 }
 
 :root.dark {
@@ -61,26 +64,23 @@
 	--elev-1: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px var(--line);
 	--elev-2: 0 14px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 1px var(--line);
 
-	/* icons go black on dark */
+	/* icons go black in dark */
 	--icon-ink: #000;
 
 	--bg-grid: color-mix(in oklab, var(--ink) 20%, transparent);
 }
 
-/* Improve callout readability in dark mode */
+/* better callouts in dark */
 :root.dark .callout,
 :root.dark .callout.ok,
 :root.dark .callout.info,
 :root.dark .callout.warn {
-	color: #111; /* near-black ink over pastels */
+	color: #111;
 }
-
 :root.dark .callout a {
 	color: #111;
-	text-decoration-color: #111; /* keep underline visible */
+	text-decoration-color: #111;
 }
-
-/* optional: slightly stronger pastel in dark so text pops more */
 :root.dark .callout {
 	background: color-mix(in oklab, var(--p2) 88%, #fff 12%);
 }
@@ -108,7 +108,7 @@ body {
 	font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
 		'Liberation Mono', monospace;
 
-	/* dotted grid only (no blobs) */
+	/* default = dotted */
 	background: radial-gradient(
 				var(--bg-grid) var(--bg-dot),
 				transparent calc(var(--bg-dot) + 0.1px)
@@ -129,7 +129,21 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-/* homepage = crosshatched grid */
+/* background helpers */
+body.bg-dots {
+	background: radial-gradient(
+				var(--bg-grid) var(--bg-dot),
+				transparent calc(var(--bg-dot) + 0.1px)
+			)
+			0 0 / var(--bg-grid-size) var(--bg-grid-size),
+		radial-gradient(
+				var(--bg-grid) var(--bg-dot),
+				transparent calc(var(--bg-dot) + 0.1px)
+			)
+			calc(var(--bg-grid-size) / 2) calc(var(--bg-grid-size) / 2) /
+			var(--bg-grid-size) var(--bg-grid-size),
+		var(--bg) !important;
+}
 body.bg-grid {
 	background: repeating-linear-gradient(
 			to bottom,
@@ -143,8 +157,6 @@ body.bg-grid {
 		),
 		var(--bg) !important;
 }
-
-/* inner pages = notebook lines */
 body.bg-lined {
 	background: repeating-linear-gradient(
 			to bottom,
@@ -152,6 +164,9 @@ body.bg-lined {
 			transparent 1px calc(var(--bg-grid-size) * 1.5)
 		),
 		var(--bg) !important;
+}
+body.bg-solid {
+	background: var(--bg) !important;
 }
 
 .container {
@@ -167,24 +182,78 @@ body.bg-lined {
 	backdrop-filter: saturate(1.1) blur(8px);
 	background: color-mix(in oklab, var(--bg) 88%, transparent);
 	border-bottom: 1px solid var(--line);
-	padding: 10px clamp(8px, 2vw, 18px);
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: auto 1fr; /* logo left, nav right */
 	align-items: center;
+	column-gap: 12px;
+	padding: 14px clamp(10px, 2vw, 20px);
 }
+
 .brand {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	color: inherit;
 	text-decoration: none;
-	font-weight: 700;
-	letter-spacing: 0.2px;
+	color: inherit;
 }
-.brand-mark {
-	width: 28px;
-	height: 28px;
-	filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.04));
+
+.brand-logo {
+	display: block;
+	height: 48px; /* bigger logo */
+	width: auto;
+}
+
+@media (max-width: 640px) {
+	.brand-logo {
+		height: 40px;
+	}
+}
+
+.brand-text {
+	position: absolute;
+	left: -9999px; /* visually hide fallback text */
+}
+
+.site-nav {
+	justify-self: end;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.site-nav a {
+	color: var(--muted);
+	text-decoration: none;
+	padding: 6px 8px;
+	border-radius: 10px;
+	transition: background var(--speed), color var(--speed);
+}
+
+.site-nav a:hover {
+	background: var(--p5);
+	color: var(--ink);
+}
+
+:root.dark .site-nav a:hover {
+	background: color-mix(in oklab, var(--card) 70%, transparent);
+}
+
+/* tiny helper note */
+.header-note {
+	font-size: var(--fs-0);
+	color: var(--muted);
+	padding: 4px 8px;
+	border-radius: 999px;
+	background: color-mix(in oklab, var(--card) 90%, var(--p5) 10%);
+	box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* Smaller screens can scale down a touch */
+@media (max-width: 480px) {
+	.brand-logo {
+		height: 38px;
+	}
 }
 
 .site-nav a {
@@ -202,7 +271,7 @@ body.bg-lined {
 	background: color-mix(in oklab, var(--card) 70%, transparent);
 }
 
-/* ---------- homepage grid cards ---------- */
+/* ---------- cards ---------- */
 .grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(var(--grid-min), 1fr));
@@ -232,7 +301,6 @@ body.bg-lined {
 	transform: translateY(-3px);
 	box-shadow: var(--elev-2);
 }
-
 .card .icon {
 	width: 64px;
 	height: 64px;
@@ -241,7 +309,7 @@ body.bg-lined {
 	place-items: center;
 	font-size: 28px;
 	background: var(--p3);
-	color: var(--icon-ink); /* icon glyph color follows variable */
+	color: var(--icon-ink);
 }
 .card[data-accent='p1'] .icon {
 	background: var(--p1);
@@ -258,11 +326,9 @@ body.bg-lined {
 .card[data-accent='p5'] .icon {
 	background: var(--p5);
 }
-/* ensure FA glyph inherits the color */
 .card .icon i {
 	color: inherit;
 }
-
 .card h3 {
 	margin: 0 0 4px;
 	font-size: var(--fs-2);
@@ -311,7 +377,6 @@ article p,
 article li {
 	max-width: 70ch;
 }
-
 article a {
 	color: color-mix(in oklab, var(--ink) 80%, var(--p4) 20%);
 	text-underline-offset: 2px;
@@ -405,51 +470,96 @@ table.cute td strong {
 	background: var(--card);
 	box-shadow: inset 0 0 0 1px var(--line);
 }
-/* default caption look */
 .diagram .mono {
 	font-size: 12px;
 	fill: currentColor;
 	opacity: 0.7;
 }
 
-/* --- SVG label readability: global, light & dark, Safari-friendly --- */
+/* Strong, readable SVG labels (works in dark too) */
 .diagram svg {
 	color: var(--ink);
 }
-
-/* default labels with strong halo */
 .diagram svg text {
 	fill: currentColor;
 	font-weight: 700;
 	letter-spacing: 0.3px;
 	paint-order: stroke fill;
 	stroke: var(--card);
-	stroke-width: 3.5px; /* thicker so it beats traces/pours */
+	stroke-width: 3.5px;
 	stroke-linejoin: round;
 	text-rendering: geometricPrecision;
 }
-/* smaller captions */
 .diagram svg text.mini {
 	font-size: 12px;
 	stroke-width: 2.5px;
 	opacity: 0.95;
 }
-/* optional extra-strong halo */
 .diagram.halo-strong svg text {
 	stroke-width: 5px;
 }
-/* optional: disable halo for a specific diagram */
 .diagram.no-halo svg text {
 	stroke-width: 0;
 	paint-order: normal;
 }
-
-/* Safari / older fallback */
 @supports not (paint-order: stroke) {
 	.diagram svg text {
 		filter: drop-shadow(0 1px 0 var(--card)) drop-shadow(0 -1px 0 var(--card))
 			drop-shadow(1px 0 0 var(--card)) drop-shadow(-1px 0 0 var(--card));
 	}
+}
+
+/* (optional) sketchy diagram helpers */
+.diagram.sketch svg [stroke] {
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.diagram.sketch .wire {
+	stroke: var(--ink);
+	stroke-width: 3;
+	fill: none;
+}
+.diagram.sketch .part {
+	stroke: var(--ink);
+	stroke-width: 2.4;
+	fill: none;
+}
+.diagram.sketch .label {
+	fill: var(--ink);
+	font-weight: 600;
+}
+
+/* LAB NOTE blocks (handwritten vibe) */
+.note {
+	border: 1.5px solid var(--line);
+	border-radius: 12px;
+	padding: 10px 12px;
+	background: var(--card);
+	margin: 12px 0;
+}
+.note .note-label {
+	display: inline-block;
+	padding: 2px 8px;
+	margin-bottom: 6px;
+	border: 1.5px solid var(--line);
+	border-radius: 999px;
+	background: var(--p1); /* default chip */
+	color: var(--ink);
+	font-weight: 700;
+	font-family: var(--font-hand);
+	letter-spacing: 0.2px;
+}
+.note.try .note-label {
+	background: #dcefe3;
+	color: #234636;
+}
+.note.care .note-label {
+	background: #f3d4d8;
+	color: #5c1e29;
+}
+.note.fact .note-label {
+	background: #e2e6f9;
+	color: #2b365c;
 }
 
 /* footer */
@@ -465,7 +575,7 @@ table.cute td strong {
 	text-decoration: none;
 }
 
-/* small screens - slightly tighter grid */
+/* small screens */
 @media (max-width: 640px) {
 	:root {
 		--grid-min: 260px;
@@ -481,7 +591,7 @@ table.cute td strong {
 	}
 }
 
-/* print (for handouts) */
+/* print */
 @media print {
 	body {
 		background: #fff;
@@ -498,7 +608,7 @@ table.cute td strong {
 	}
 }
 
-/* ---------- resistor color bands ---------- */
+/* resistor bands */
 .band {
 	display: inline-block;
 	padding: 4px 10px;
@@ -548,4 +658,78 @@ table.cute td strong {
 .band.silver {
 	background: silver;
 	color: #000;
+}
+
+/* ---------------- Notes (try / care / fact) ---------------- */
+/* Variant tokens (you can tweak these to taste) */
+.note.try {
+	--note-bg: var(--p3); /* mint  */
+	--note-chip: color-mix(in oklab, var(--p3) 86%, #fff 14%);
+	--note-accent: color-mix(in oklab, var(--p3) 16%, var(--ink) 84%);
+}
+.note.care {
+	--note-bg: color-mix(in oklab, var(--p1) 88%, #fff 12%); /* pink */
+	--note-chip: color-mix(in oklab, var(--p1) 86%, #fff 14%);
+	--note-accent: color-mix(in oklab, var(--p1) 18%, var(--ink) 82%);
+}
+.note.fact {
+	--note-bg: var(--p4); /* lavender */
+	--note-chip: color-mix(in oklab, var(--p4) 86%, #fff 14%);
+	--note-accent: color-mix(in oklab, var(--p4) 16%, var(--ink) 84%);
+}
+
+/* Base block */
+.note {
+	position: relative;
+	margin: 16px 0;
+	padding: 18px 16px 16px;
+	border-radius: var(--r-lg);
+	background: var(--note-bg, var(--card));
+	box-shadow: inset 0 0 0 1px var(--line);
+	color: var(--ink);
+	/* subtle “index card” accent */
+	border-left: 6px solid var(--note-accent, var(--line));
+}
+
+/* Big, readable chip label */
+.note .note-label {
+	position: absolute;
+	top: -18px;
+	left: 14px;
+	padding: 4px 12px;
+	border-radius: 999px;
+	border: 1px solid var(--line);
+	background: var(--note-chip, var(--card));
+	color: var(--ink);
+	font-weight: 800;
+	font-size: clamp(18px, 1.6vw, 22px);
+	letter-spacing: 0.2px;
+	/* optional handwritten vibe */
+	font-family: var(--font-hand, 'IBM Plex Mono'), ui-monospace, monospace;
+	line-height: 1;
+	transform: rotate(-0.5deg); /* tiny zest, like a sticker */
+}
+
+/* Links remain readable inside notes */
+.note a {
+	color: inherit;
+	text-decoration-color: currentColor;
+}
+
+/* Dark mode: keep text near-black for contrast over pastels */
+:root.dark .note,
+:root.dark .note .note-label,
+:root.dark .note a {
+	color: #111;
+}
+
+/* Small screens: give the chip a little more breathing room */
+@media (max-width: 640px) {
+	.note {
+		padding-top: 22px;
+	}
+	.note .note-label {
+		top: -16px;
+		font-size: clamp(18px, 4.8vw, 20px);
+	}
 }

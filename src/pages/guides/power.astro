@@ -1,51 +1,49 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "power basics — ecute.club";
 ---
-<BaseLayout {title}>
+<BaseLayout {title} bodyClass="bg-lined">
   <article class="container">
     <h1>power basics</h1>
-    <p>power keeps everything alive. we care about <strong>voltage</strong> (how hard it pushes), <strong>current</strong> (how much flows), and <strong>polarity</strong> (which side is +).</p>
-
-    <h2>what is a power supply?</h2>
-    <p>a source that provides a (mostly) steady voltage and enough current. examples: batteries, USB ports, bench supplies, or a regulator fed by a higher voltage.</p>
-
-    <h2>core ideas</h2>
-    <ul>
-      <li><strong>voltage (V):</strong> parts are rated to run at specific voltages (e.g., 3.3 V, 5 V, 12 V).</li>
-      <li><strong>current (A):</strong> how much the load draws. a supply should be rated for <em>at least</em> that much.</li>
-      <li><strong>power (W) = V×I:</strong> tells you heat/wasting limits in regulators and resistors.</li>
-    </ul>
-
-    <h2>regulators</h2>
-    <ul>
-      <li><strong>LDO</strong> (linear): simple; needs headroom; drops extra voltage as heat.</li>
-      <li><strong>buck</strong> (switching): efficient; uses an inductor; a bit noisier but cooler.</li>
-    </ul>
-
-    <div class="diagram" role="img" aria-label="battery → regulator → 5V rail with decoupling">
-      <svg viewBox="0 0 560 160" width="100%" height="auto">
-        <rect x="0" y="0" width="560" height="160" rx="16" fill="var(--card)"/>
-        <text x="36" y="84" class="mono">battery</text>
-        <rect x="30" y="60" width="50" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="80" y1="80" x2="200" y2="80" stroke="currentColor" stroke-width="2"/>
-        <rect x="200" y="62" width="80" height="36" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="240" y="84" class="mono" text-anchor="middle">reg</text>
-        <line x1="280" y1="80" x2="420" y2="80" stroke="currentColor" stroke-width="2"/>
-        <text x="430" y="84" class="mono">+5V</text>
-        <line x1="340" y1="80" x2="340" y2="110" stroke="currentColor" stroke-width="2"/>
-        <rect x="330" y="110" width="20" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="340" y1="130" x2="340" y2="150" stroke="currentColor" stroke-width="2"/>
-        <line x1="40" y1="150" x2="520" y2="150" stroke="currentColor" stroke-width="2"/>
-        <text x="18" y="154" class="mono">0V</text>
+    <div class="diagram" aria-label="LDO vs buck regulator blocks">
+      <svg viewBox="0 0 760 160" width="100%" height="auto">
+        <rect x="10" y="10" width="740" height="140" rx="16" fill="var(--card)"/>
+        <!-- LDO -->
+        <text x="120" y="36" class="mono">LDO</text>
+        <line x1="40" y1="80" x2="100" y2="80" stroke="currentColor" stroke-width="3"/>
+        <rect x="100" y="56" width="140" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+        <line x1="240" y1="80" x2="320" y2="80" stroke="currentColor" stroke-width="3"/>
+        <text x="40" y="70" class="mono mini">Vin</text><text x="322" y="70" class="mono mini">Vout</text>
+        <!-- Buck -->
+        <text x="510" y="36" class="mono">buck</text>
+        <line x1="420" y1="80" x2="470" y2="80" stroke="currentColor" stroke-width="3"/>
+        <rect x="470" y="56" width="60" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+        <rect x="540" y="56" width="24" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="612" cy="80" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="626" y1="80" x2="660" y2="80" stroke="currentColor" stroke-width="3"/>
+        <text x="420" y="70" class="mono mini">Vin</text><text x="662" y="70" class="mono mini">Vout</text>
       </svg>
     </div>
 
-    <h2>little rules</h2>
+    <h2>regulate</h2>
     <ul>
-      <li>mind <strong>polarity</strong> (mark + and 0 V); add reverse-protection (Schottky or “ideal diode” MOSFET).</li>
-      <li>decouple every IC: <strong>0.1 µF</strong> by the pins + one <strong>10–47 µF</strong> per rail section.</li>
-      <li>size traces/wires for current; if warm, they’re too small.</li>
+      <li><strong>LDO:</strong> simple step-down; wastes (Vin−Vout)×I as heat</li>
+      <li><strong>Buck:</strong> efficient step-down; follow datasheet for inductor/diode/caps layout</li>
+      <li><strong>Protection:</strong> input diode/fuse, reverse protection, TVS for spikes</li>
     </ul>
+
+    <h2>decouple everything</h2>
+    <ul>
+      <li><strong>0.1 µF</strong> ceramic at each IC’s power pins</li>
+      <li><strong>10–47 µF</strong> bulk per rail area</li>
+      <li>class-II MLCCs (X7R/X5R) lose C with DC bias → add headroom</li>
+    </ul>
+
+    <h2>budget</h2>
+    <p>sum worst-case currents; add 30–50% headroom. Check USB limits (500 mA on 2.0, 900 mA on 3.0 without negotiation).</p>
+
+    <Note variant="fact">ground plane (pour) = wide, low-impedance return — helps noise &amp; stability.</Note>
+    <Note variant="care">don’t run motors/LED strips off logic rails; give them their own supply and ground back at the source.</Note>
   </article>
 </BaseLayout>

@@ -1,33 +1,38 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "troubleshooting — ecute.club";
 ---
-<BaseLayout {title}>
+<BaseLayout {title} bodyClass="bg-lined">
   <article class="container">
     <h1>troubleshooting</h1>
-    <p>calm beats chaos. check power first, then signals, then logic.</p>
 
-    <h2>flow</h2>
-    <ol>
-      <li>is +V on every chip? is 0 V common?</li>
-      <li>no short between +V and 0 V (DMM continuity).</li>
-      <li>inputs not floating (pull-ups/pull-downs present)?</li>
-      <li>module pins at sane levels (3.3/5 V as expected)?</li>
-    </ol>
-
-    <div class="diagram" role="img" aria-label="DMM continuity check">
-      <svg viewBox="0 0 560 150" width="100%" height="auto">
-        <rect x="0" y="0" width="560" height="150" rx="16" fill="var(--card)"/>
-        <text x="36" y="36" class="mono">beep mode</text>
-        <rect x="110" y="20" width="150" height="80" rx="10" fill="none" stroke="currentColor"/>
-        <text x="185" y="56" text-anchor="middle" class="mono">DMM</text>
-        <text x="185" y="74" text-anchor="middle" class="mono mini">🔔</text>
-        <circle cx="140" cy="110" r="4" fill="currentColor"/>
-        <circle cx="230" cy="110" r="4" fill="currentColor"/>
-        <line x1="140" y1="110" x2="300" y2="110" stroke="currentColor"/>
-        <line x1="230" y1="110" x2="420" y2="60" stroke="currentColor"/>
-        <text x="430" y="64" class="mono">net A</text>
+    <div class="diagram" aria-label="simple troubleshooting flow">
+      <svg viewBox="0 0 720 180" width="100%" height="auto">
+        <rect x="10" y="10" width="700" height="160" rx="16" fill="var(--card)"/>
+        <g transform="translate(60,24)">
+          <rect width="160" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="80" y="30" text-anchor="middle" class="mono">power OK?</text>
+        </g>
+        <line x1="140" y1="72" x2="140" y2="96" stroke="currentColor" stroke-width="3"/>
+        <g transform="translate(60,96)">
+          <rect width="160" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="80" y="30" text-anchor="middle" class="mono">inputs sane?</text>
+        </g>
+        <line x1="140" y1="144" x2="300" y2="144" stroke="currentColor" stroke-width="3"/>
+        <g transform="translate(300,120)">
+          <rect width="160" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="80" y="30" text-anchor="middle" class="mono">divide &amp; test</text>
+        </g>
       </svg>
     </div>
+
+    <ol>
+      <li><strong>power first:</strong> correct voltage, polarity, and ground continuity</li>
+      <li><strong>inputs sane:</strong> pull-ups/downs in place; no floating pins</li>
+      <li><strong>divide:</strong> test sub-circuits; bypass blocks to isolate faults</li>
+      <li><strong>probe:</strong> DMM for DC; logic probe/LED for digital; scope if available</li>
+    </ol>
+    <Note variant="try">print debug (serial) and blink LEDs to show progress paths.</Note>
   </article>
 </BaseLayout>
