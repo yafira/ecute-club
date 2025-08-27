@@ -199,7 +199,7 @@ body.bg-solid {
 
 .brand-logo {
 	display: block;
-	height: 48px; /* bigger logo */
+	height: 100px;
 	width: auto;
 }
 
@@ -225,14 +225,16 @@ body.bg-solid {
 .site-nav a {
 	color: var(--muted);
 	text-decoration: none;
-	padding: 6px 8px;
-	border-radius: 10px;
+	padding: 8px 10px;
+	border-radius: 12px;
 	transition: background var(--speed), color var(--speed);
 }
-
 .site-nav a:hover {
 	background: var(--p5);
 	color: var(--ink);
+}
+:root.dark .site-nav a:hover {
+	background: color-mix(in oklab, var(--card) 70%, transparent);
 }
 
 :root.dark .site-nav a:hover {
@@ -256,19 +258,24 @@ body.bg-solid {
 	}
 }
 
-.site-nav a {
-	color: var(--muted);
-	text-decoration: none;
-	padding: 8px 10px;
-	border-radius: 12px;
-	transition: background var(--speed), color var(--speed);
-}
-.site-nav a:hover {
-	background: var(--p5);
+.theme-toggle {
+	font-size: 40px;
+	padding: 6px 10px;
+	border: none;
+	background: var(--card);
+	border-radius: 999px;
+	cursor: pointer;
 	color: var(--ink);
+	box-shadow: inset 0 0 0 1px var(--line);
+	transition: background var(--speed), transform var(--speed);
 }
-:root.dark .site-nav a:hover {
-	background: color-mix(in oklab, var(--card) 70%, transparent);
+.theme-toggle:hover {
+	background: var(--p5);
+	transform: translateY(-1px);
+}
+:root.dark .theme-toggle {
+	background: var(--card);
+	color: var(--ink);
 }
 
 /* ---------- cards ---------- */
@@ -348,7 +355,8 @@ body.bg-solid {
 }
 .section-head h2 {
 	margin: 0;
-	font-size: var(--fs-4);
+	/* font-size: var(--fs-4); */
+	font-size: 20px;
 	letter-spacing: 0.2px;
 }
 .section-head .hint {
