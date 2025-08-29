@@ -178,6 +178,14 @@ const {
   // init
   restore();
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.note ul li').forEach(li => {
+    li.addEventListener('click', () => {
+      li.toggleAttribute('data-done');
+    });
+  });
+});
 </script>
 
 

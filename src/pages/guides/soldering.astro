@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "soldering guide — ecute.club";
 ---
 <BaseLayout {title}>
@@ -56,5 +57,28 @@ const title = "soldering guide — ecute.club";
       <li>use no-clean flux pen; clean sticky residue with isopropyl.</li>
       <li>ventilation is good; avoid breathing fumes.</li>
     </ul>
+
+<h2>bench notes</h2>
+<Note variant="bench" label="recommendations/tips">
+  <div class="author">
+
+  </div>
+  <ul>
+    <li>for lead-free solder i recommend <strong>SAC305</strong></li>
+    <li>personal fave solder companies: MG Chemicals, AIM, Loctite, Chip Quik</li>
+    <li>if you really like working with lead solder, AIM sells an indium alloy that feels similar — it’s expensive, but they’ll send a free sample if you write them</li>
+    <li>fav flux: <strong>Chip Quik SMD291</strong> (comes in a syringe)</li>
+    <li>Stickvise</li>
+    <li>Omnifixo — great for soldering wire-to-wire; i hate third hands and this is the only one worth getting</li>
+    <li>get a microscope before you think you need one</li>
+    <li>spreading out flux braid helps it absorb solder faster</li>
+    <li>Kimwipes + 99% ISO for cleaning flux</li>
+    <li>affordable good soldering irons: Miniware, Sugon, Thermaltronics (in order of price/size)</li>
+    <li>game changer: <strong>Aven tweezers</strong> (set of 5, yellow bag)</li>
+  </ul>
+  <footer class="note-cite">— Evan Shu Kahn <a href="https://www.instagram.com/wormy.rocks/" target="_blank">(wormy.rocks)</a></footer>
+</Note>
+
+
   </article>
 </BaseLayout>
