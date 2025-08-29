@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Note from "../../components/Note.astro";
 const title = "study electronics — ecute.club";
 ---
 <BaseLayout {title}>
@@ -98,8 +99,7 @@ const title = "study electronics — ecute.club";
       <li>label nets (<span class="mono">VCC</span>, <span class="mono">LED_A</span>, <span class="mono">SCL</span>) so the diagram reads like a story.</li>
     </ul>
 
-    <div class="callout info">
-      <strong>practice idea:</strong> build a 555 astable on a breadboard, then predict the frequency with the formula, then measure with a phone oscilloscope app or microcontroller timing.
+     <Note variant="try">Build a 555 astable on a breadboard, then predict the frequency with the formula, then measure with a phone oscilloscope app or microcontroller timing.</Note>
     </div>
   </article>
 </BaseLayout>
